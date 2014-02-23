@@ -1,14 +1,27 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
-from django.contrib.auth import get_user_model
+#from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
-from .models import UserProfile
-from .models import Product
-from .models import Shop
-from .models import Catalog
-from .models import Subcatalog
-from .forms import UserProfileForm, ProductForm, OpenShopForm, AddproductForm
 
+from products.models import (
+    UserProfile,
+    Product,
+    Shop,
+    Catalog,
+    Subcatalog
+)
+from products.forms import (
+    UserProfileForm,
+    ProductForm,
+    OpenShopForm,
+    AddproductForm
+)
 
+try:
+    from django.contrib.auth import get_user_model
+except ImportError: # django < 1.5
+    from django.contrib.auth.models import User
+else:
+    User = get_user_model()
 
 
 
