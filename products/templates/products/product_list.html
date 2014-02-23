@@ -13,7 +13,7 @@
       <p>{{ product.price }}₪</p>
       Sale price<p>{{ product.sale_price }}₪</p>
       Submitted by {{ product.shop }}
-        <a href="/shops/{{ product.shop.slug }}/">{{ product.shop }}</a>
+        <a href="{{ product.shop.get_absolute_url }}">{{ product.shop }}</a>
 
 
 {% endfor %}

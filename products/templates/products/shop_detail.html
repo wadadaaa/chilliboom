@@ -5,7 +5,9 @@
 {% block content %}
         <h2>{{ object.title }}</h2>
         <a href="{{ object.website }}"/> {{ object.website }} </a>
-        <img src="{{ object.avatar.url }}"/>
+        {% if object.avatar %}
+        <img src="{{ object.avatar.url }}">
+        {% endif %}
         <p>{{ object.description }}</p>
 
         <h2>Last arrivals from {{ object.title }}</h2>
