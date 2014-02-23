@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block content %}
+
+
+{% for product in object_list %}
+      <b>{{ product.title }}</b>
+        {% if product.image %}
+        <img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product }}">
+        {% endif %}
+      <p>{{ product.description }}</p>
+      <p>{{ product.price }}₪</p>
+      Sale price<p>{{ product.sale_price }}₪</p>
+      Submitted by {{ product.shop }}
+        <a href="/shops/{{ product.shop.slug }}/">{{ product.shop }}</a>
+
+
+{% endfor %}
+
+
+{% endblock %}
+        </br>

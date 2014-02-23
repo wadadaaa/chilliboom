@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block content %}
+
+
+{% for catalog in object_list %}
+        <b>{{ catalog.title }}</b>
+         <p><a href="/all/{{ catalog.slug }}/"><{{ catalog }}</a></p>
+
+
+{% endfor %}
+
+
+{% endblock %}

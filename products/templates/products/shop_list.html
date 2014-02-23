@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block content %}
+
+
+{% for shop in object_list %}
+<b>{{ shop.title }}</b>
+{% if shop.avatar %}
+        <img src="{{ shop.avatar|thumbnail_url:'small' }}"
+             alt="{{ shop.title }}"/></a>
+        {% endif %}
+<p><a href="{{ shop.get_absolute_url }}">{{ shop.title }}</a></p>
+
+
+
+{% endfor %}
+
+
+{% endblock %}
