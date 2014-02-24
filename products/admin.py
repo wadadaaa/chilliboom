@@ -39,6 +39,13 @@ class UserProfileAdmin(UserAdmin):
 
 class ShopAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+    prepopulated_fields = {"slug": ("title",)}
+    list_display = ('admin_thumbnail', 'title')
+    list_filter = ('created_at',)
+
+    def admin_thumbnail(self, obj):
+        return '<img src="%s%s" alt="" height="50">'  % (settings.MEDIA_URL, obj.avatar)
+    admin_thumbnail.allow_tags = True    
 
 
 admin.site.register(Product, ProductAdmin)
