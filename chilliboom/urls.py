@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^edit_profile/$', auth(UserProfileEditView.as_view()), name="edit_profile"),
 
     url(r'^shop/', include('products.urls')),
+    url(r'^search/', include('haystack.urls')),
     
 )
 

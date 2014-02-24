@@ -1,0 +1,3 @@
+{{ object.title }}
+{{ object.submitter }}
+{{ object.created_at }}

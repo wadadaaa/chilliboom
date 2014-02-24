@@ -1,6 +1,7 @@
 __author__ = 'annalopatinski'
 
 from django.contrib import admin
+from django.conf import settings
 from .models import Product
 from .models import Catalog
 from .models import Subcatalog
@@ -12,6 +13,11 @@ from django.contrib.auth import get_user_model
 
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+    list_display = ('admin_thumbnail', 'title')
+    list_filter = ('created_at',)
+
+    def admin_thumbnail(self, obj):
+    	return '<img src="%s%s" alt="">' % (settings.MEDIA_URL, obj.image)
 
 
 class CatalogAdmin(admin.ModelAdmin):

@@ -35,6 +35,8 @@ INSTALLED_APPS = (
     'south',
     'registration',
     'easy_thumbnails',
+    'updown',
+    'haystack',
     
 )
 
@@ -88,7 +90,16 @@ from django.core.urlresolvers import reverse_lazy
 LOGIN_URL=reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_URL=reverse_lazy('logout')
+MAX_USER_SHOPS = 10
 
+#haystack search
+import os
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': cd('whoosh_index'),
+    },
+}
 
 THUMBNAIL_ALIASES = {
     '': {

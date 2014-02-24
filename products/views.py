@@ -95,6 +95,7 @@ class OpenShop(SuccessMessageMixin,CreateView):
     def form_valid(self, form):
         f = form.save(commit=False)
         f.submitter = self.request.user
+        
         f.save()
         return super(OpenShop, self).form_valid(form)
     def get_success_url(self):

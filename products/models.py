@@ -1,6 +1,9 @@
 from django.db import models
 #from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from updown.fields import RatingField
+
+
 
 try:
     from django.contrib.auth import get_user_model
@@ -38,6 +41,8 @@ class Shop(models.Model):
                                    help_text="Describe yourself.")
     submitter = models.ForeignKey(User)
     slug = models.SlugField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.title
@@ -62,10 +67,12 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     shop = models.ForeignKey(Shop)
+    rating = RatingField()
     
 
     def __unicode__(self):
         return self.title
+
 
 
 class UserProfile(models.Model):

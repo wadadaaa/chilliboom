@@ -12,6 +12,7 @@
       <p>{{ product.description }}</p>
       <p>{{ product.price }}₪</p>
       Sale price<p>{{ product.sale_price }}₪</p>
+      {{ product.get_rating_display }}
       Submitted by {{ product.shop }}
         <a href="{{ product.shop.get_absolute_url }}">{{ product.shop }}</a>
 
