@@ -17,8 +17,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
 
     def admin_thumbnail(self, obj):
-    	return '<img src="%s%s" alt="">' % (settings.MEDIA_URL, obj.image)
+    	return '<img src="%s%s" alt="" height="50">'  % (settings.MEDIA_URL, obj.image)
+    admin_thumbnail.allow_tags = True    
 
+        
 
 class CatalogAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
