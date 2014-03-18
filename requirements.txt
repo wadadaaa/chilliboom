@@ -1,0 +1,16 @@
+Django==1.6.2
+dj-database-url==0.2.2
+django-dotenv==1.2
+django-getenv==1.2
+raven==4.0.4
+wsgiref==0.1.2
+newrelic
+pillow
+south
+django-registration
+easy_thumbnails
+Whoosh==2.6.0
+django-haystack==2.1.0
+django-debug-toolbar==1.0.1
+django-dotenv==1.2
+django-getenv==1.2

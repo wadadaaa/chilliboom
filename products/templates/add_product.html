@@ -1,0 +1,68 @@
+{% extends "base.html"%}
+{% block content %}
+
+
+   <form enctype="multipart/form-data" action="{% url 'addproduct' %}" method="post">{% csrf_token %}
+        {{ form.non_field_errors }}
+          <p>
+            {{form.title.errors}}
+            <label class="txtField" for="id_subject">Product name:</label>
+            {{ form.title }}
+        </p>
+        <p>
+            {{form.slug.errors}}
+            <label class="txtField" for="id_subject">Slug:</label>
+            {{ form.slug }}
+        </p>
+        <p>
+            {{form.catalog.errors}}
+            <label class="txtField" for="id_subject">Product catalog:</label>
+            {{ form.catalog }}
+
+        <p>
+            {{form.subcatalog.errors}}
+            <label class="txtField" for="id_subject">Product subcatalog:</label>
+            {{ form.categories }}
+        </p>
+
+        <p>
+            {{form.description.errors}}
+            <label class="txtField" for="id_subject">Product descriptions:</label>
+            {{ form.description }}
+        </p>
+        <p>
+            {{form.price.errors}}
+            <label class="txtField" for="id_subject">Product price:</label>
+            {{ form.price }}
+        </p>
+        <p>
+            {{form.sale_price.errors}}
+            <label class="txtField" for="id_subject">Product sale price:</label>
+            {{ form.sale_price }}
+        </p>
+        <p>
+            {{form.is_active.errors}}
+            <label class="txtField" for="id_subject">Product activity:</label>
+            {{ form.is_active }}
+        </p>
+        <p>
+            {{form.is_featured.errors}}
+            <label class="txtField" for="id_subject">Product featured:</label>
+            {{ form.is_featured }}
+        </p>
+        <p>
+            {{form.quantity.errors}}
+            <label class="txtField" for="id_subject">Product quantity:</label>
+            {{ form.quantity }}
+        </p>
+        <p>
+            {{form.shop.errors}}
+            <label class="txtField" for="id_subject">Product shop:</label>
+            {{ form.shop }}
+        </p>
+
+
+        <input type="submit" value="Submit" />
+    </form>
+
+{% endblock %}

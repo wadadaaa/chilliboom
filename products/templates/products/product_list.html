@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block content %}
+
+
+<p>
+{% for product in object_list %}
+        <b><a href="{{ product.get_absolute_url }}" title="{{ product.title }}">{{ product.title }}</a></b>
+        {% if product.image %}
+        <img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product }}">
+        {% endif %}
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}₪</p>
+        Sale price<p>{{ product.sale_price }}₪</p>
+      
+        Submitted by <a href="{{ product.shop.get_absolute_url }}">{{ product.shop }}</a>
+         </br>
+
+{% endfor %}
+</p>
+ </br>
+
+{% endblock %}
+       

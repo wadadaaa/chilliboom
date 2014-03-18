@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block content %}
+
+
+{% for catalog in object_list %}
+        <b>{{ catalog.title }}</b>
+         <p><a href="{{ catalog.get_absolute_url }}">{{ catalog }}</a></p>
+
+        {% comment %} 
+        TODO: добавить шаблон отделньного каталога, view, urls
+        {% endcomment %}
+
+{% endfor %}
+
+
+{% endblock %}

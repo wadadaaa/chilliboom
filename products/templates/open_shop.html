@@ -1,0 +1,44 @@
+{% extends "base.html"%}
+{% block content %}
+
+
+   <form enctype="multipart/form-data" action="{% url 'openshop' %}" method="post">{% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="inputBloc">
+            <p>
+                {{form.title.errors}}
+                <label class="txtField" for="id_subject">Shop name:</label>
+                {{ form.title }}
+            </p>
+            <p>
+                {{form.title.errors}}
+                <label class="txtField" for="id_subject">Shop avatar:</label>
+                {{ form.avatar }}
+            </p>
+            <p>
+                {{form.website.errors}}
+                <label class="txtField" for="id_subject">Shop website:</label>
+                {{ form.website }}
+            </p>
+
+            <p>
+                {{form.description.errors}}
+                <label class="txtField" for="id_subject">Shop description:</label>
+                {{ form.description }}
+            </p>
+
+            <p>
+                {{form.slug.errors}}
+                <label class="txtField" for="id_subject">Shop slug:</label>
+                {{ form.slug }}
+            </p>
+
+        </div>
+        <input type="submit" value="Submit" />
+    </form>
+
+
+
+
+
+{% endblock %}

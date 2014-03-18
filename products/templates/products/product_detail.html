@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load thumbnail bootstrap3 %}
+{% block title %} &bull; {{ product.title }} Details{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-title">
+<div class="panel-heading">
+  <h3 class="panel-title">{{ product.title }} <a class="btn btn-default pull-right" href="{{ product.shop.get_absolute_url }}">Submitted by {{ product.shop }}</a></h3>
+</div>
+<div class="panel-body">
+<div class="row">
+	<div class="col-lg-6">
+		{% if product.image %}
+        <img class="img-thumbnail" src="{{ product.image|thumbnail_url:'large' }}" alt="{{ product.title }}">
+        {% else %}
+        <img class="img-thumbnail" src="{{ STATIC_URL }}img/product.jpg" alt="{{ product.title }}">
+        {% endif %}
+	</div>
+	<div class="col-lg-6">
+
+		<div class="well">{{ product.description }}</div>
+	
+        
+	</div>
+
+</div>
+        
+        
+
+</div>
+<div class="panel-footer">
+	<div class="btn-group btn-group-justified">
+		<a class="btn btn-danger">{% bootstrap_icon "heart" %} Like</a>
+        <a class="btn btn-primary">Price <span class="badge">{{ product.price }} ₪</span></a>
+        <a class="btn btn-warning">Sale price <span class="badge">{{ product.sale_price }} ₪</span></a>
+        <a class="btn btn-success">{% bootstrap_icon "shopping-cart" %} Add to cart</a>
+    </div>
+</div>
+</div>         
+
+
+{% endblock %}
