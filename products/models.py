@@ -2,6 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse_lazy as reverse
 from django.utils.timezone import now
 from django.contrib.auth import get_user_model
+from django.db.models import Count
 User = get_user_model()
 
 
@@ -38,8 +39,12 @@ class Shop(models.Model):
     def get_absolute_url(self):
         return reverse('shop_detail', kwargs={'slug': self.slug})
 
+    def likes(self):
+        return Like.objects.filter(product__shop=self).count()
+
 
 class ProductManager(models.Manager):
+
     def get_featured(self):
         return self.filter(is_featured=True)
 
@@ -58,44 +63,36 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     shop = models.ForeignKey(Shop)
-    #likes = models.PositiveIntegerField()
 
+    @models.permalink
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'slug': self.slug})
 
-
     objects = ProductManager()
-    
+
+    class Meta:
+        permissions = (
+            ('can_like', 'Can like product'),
+        )
+    @models.permalink
+    def like_url(self):
+        return '/shop/like/?product=%s' % self.pk
+
+    def likes(self):
+        return Like.objects.aggregate(Count('likes'))
 
     def __unicode__(self):
         return self.title
 
 
+class Like(models.Model):
+    user = models.ForeignKey(User, related_name='product_likes')
+    product = models.ForeignKey(Product, related_name='likes')
 
-'''
-def update_likes(sender, instance, updated, **kwargs):
-    if updated:
-        likes+=1 #i have no
-'''
-
-
-'''
-class Likes(models.Model):
-    submitter = models.ForeignKey(User)
-    product = models.ForeignKey(Product)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
     class Meta:
-        unique_together = (('submitter', 'product', 'created_at'))
-
-    def __unicode__(self):
-        return "%s submitter is like %s" % (self.submitter, self.product)
-
-    def save(self, *args, **kwargs):
-        self.created_at = now()
-        super(Like, self).save(*args, **kwargs)
-
-'''
+        unique_together = (
+            ('user', 'product'),
+        )
 
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True)

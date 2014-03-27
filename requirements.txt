@@ -11,6 +11,4 @@ django-registration
 easy_thumbnails
 Whoosh==2.6.0
 django-haystack==2.1.0
-django-debug-toolbar==1.0.1
-django-dotenv==1.2
-django-getenv==1.2
+django-braces

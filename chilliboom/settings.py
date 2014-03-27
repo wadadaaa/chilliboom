@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'haystack',
     'bootstrap3',
+    'braces',
     
 )
 

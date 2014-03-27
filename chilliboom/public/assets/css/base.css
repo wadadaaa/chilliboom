@@ -833,3 +833,13 @@ table#change-history tbody th {
     color: #666;
 }
 
+/*=HEADER*/
+    #header {width:924px;margin:0 auto;padding:10px 30px 10px 0;color:#ffffff;}
+    #header:after {content: '.';display: block;clear:both;visibility: hidden;height:0;font-size:0;}
+      #header a {color:#ffffff;}
+      #header .main_menu {list-style-type:none;font-size:1.5em;}
+        #header .main_menu li {display:inline;margin-right:30px;}
+        #header .open_shop_link {float:right;}
+      #header .logo {float:left;margin-right:10px;}
+      #header .cart {float:left;width:340px;background:#85827f;margin-bottom:14px;padding:10px;font-size:1.3em;}
+

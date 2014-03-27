@@ -1,25 +1,41 @@
-
 {% extends "base.html" %}
-{% load thumbnail %}
+{% load thumbnail bootstrap3 %}
+{% block title %} &bull; Product List{% endblock %}
+
+
 {% block content %}
-
-
-<p>
-{% for product in object_list %}
-        <b><a href="{{ product.get_absolute_url }}" title="{{ product.title }}">{{ product.title }}</a></b>
-        {% if product.image %}
-        <img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product }}">
+<div class="panel panel-title">
+<div class="panel-heading">
+    <h3 class="panel-title">{{ object.title }} <a class="btn btn-default pull-right" href="{{ object.shop.get_absolute_url }}">{{ object.shop }}</a></h3>
+</div>
+<div class="panel-body">
+<div class="row">
+	<div class="col-lg-6">
+{% for object in object_list %}
+    {% if object.image %}
+         <img class="img-thumbnail" src="{{ object.image|thumbnail_url:'large' }}" alt="{{ object.title }}">
+        {% else %}
+        <img class="img-thumbnail" src="{{ STATIC_URL }}img/object.jpg" alt="{{ object.title }}">
         {% endif %}
-        <p>{{ product.description }}</p>
-        <p>{{ product.price }}₪</p>
-        Sale price<p>{{ product.sale_price }}₪</p>
-      
-        Submitted by <a href="{{ product.shop.get_absolute_url }}">{{ product.shop }}</a>
-         </br>
 
+    </div>
+    <div class="col-lg-6">
+
+		<div class="well">{{ object.description }}</div>
 {% endfor %}
-</p>
- </br>
+	</div>
+    </div>
+
+</div>
+<div class="panel-footer">
+	<div class="btn-group btn-group-justified">
+		<a class="btn btn-danger">{% bootstrap_icon "heart" %} Like</a>
+        <a class="btn btn-primary">Price <span class="badge">{{ product.price }} ₪</span></a>
+        <a class="btn btn-warning">Sale price <span class="badge">{{ product.sale_price }} ₪</span></a>
+        <a class="btn btn-success">{% bootstrap_icon "shopping-cart" %} Add to cart</a>
+    </div>
+</div>
+</div>
 
 {% endblock %}
-       
+

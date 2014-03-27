@@ -1,7 +1,13 @@
-from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.views.generic import View, ListView, DetailView, UpdateView, CreateView
+from django.views.generic.edit import SingleObjectMixin
 from django.core.urlresolvers import reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect, Http404
+from braces.views import JSONResponseMixin, LoginRequiredMixin, PermissionRequiredMixin, AjaxResponseMixin
+
+
 User = get_user_model()
 
 
@@ -10,7 +16,7 @@ from products.models import (
     Product,
     Shop,
     Catalog,
-    #Likes,
+    Like,
 
 )
 from products.forms import (
@@ -32,10 +38,76 @@ class ProductDetail(ProductMixin, DetailView):
 
 
 class ProductList(ProductMixin, ListView):
-    pass
+    paginate_by = 5
+
+DIRECTION_WEIGHT = {
+    'up': 1,
+}
+
+class LikeProductMixin(SingleObjectMixin):
+    model = Product
+
+    def get_object(self, queryset=None):
+        self.product = super(LikeProductMixin, self).get_object(queryset)
+        try:
+            obj = self.product.get(pk=self.kwargs['product_id'])
+        except ObjectDoesNotExist:
+            raise Http404
+        return obj
 
 
-class ProductCreate(ProductMixin, SuccessMessageMixin, CreateView):
+# class ProductLike(LikeProductMixin, View, PermissionRequiredMixin):
+#     permission_required = 'products.can_like'
+#     def get(self, request, direction, weight=1):
+#         self.object = self.get_object()
+#         weight = DIRECTION_WEIGHT[direction] * weight
+#
+#         like, created = Like.objects.get_or_create(
+#             user=request.user,
+#             product=self.object,
+#             defaults={'weight': weight}
+#         )
+#
+#         if not created:
+#             if like.weight == weight:
+#
+#                 # Liked the same
+#                 pass
+#             elif abs(like.weight) == abs(weight):
+#                 # Liked opposite
+#                 like.delete()
+#             else:
+#                 like.weight = weight
+#                 like.save()
+#         return HttpResponseRedirect(self.product.like_url())
+
+class ProductLike(JSONResponseMixin, AjaxResponseMixin, View, PermissionRequiredMixin, LikeProductMixin):
+    permission_required = 'product.can_like'
+
+    def ok_or_bad(self):
+        return 'I dunno yet'
+    #
+    # def get(self, request):
+    #     product = request.GET['product']
+    #     like = Like.objects.get_or_create(
+    #         user=request.user,
+    #         product=product,
+    #     )
+    #     like.save()
+
+
+
+    def get_ajax(self, request, *args, **kwargs):
+        json_dict = {
+            'result': self.ok_or_bad
+        }
+        return self.render_json_response(json_dict)
+
+
+
+
+
+class ProductCreate(ProductMixin, SuccessMessageMixin, CreateView, LoginRequiredMixin):
     form_class = ProductCreateForm
     success_message = "New product added"
 
@@ -80,7 +152,7 @@ class ShopDetail(ShopMixin, DetailView):
         return context
 
 
-class ShopCreate(ShopMixin, SuccessMessageMixin, CreateView):
+class ShopCreate(ShopMixin, SuccessMessageMixin, CreateView, LoginRequiredMixin):
     form_class = ShopCreateForm
     success_message = "You opened own shop!"
 
@@ -104,7 +176,7 @@ class ProfileDetail(DetailView):
         return user
 
 
-class ProfileUpdate(SuccessMessageMixin, UpdateView):
+class ProfileUpdate(SuccessMessageMixin, UpdateView, LoginRequiredMixin):
     model = Profile
     form_class = ProfileForm
     success_message = "Profile saved"
@@ -114,9 +186,3 @@ class ProfileUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse("profile", kwargs={'slug': self.request.user})
-
-
-'''
-class LikesView(CreateView):
-    model = Likes
-'''

@@ -6,7 +6,8 @@ from products.models import (
     Product,
     Catalog,
     Profile,
-    Shop
+    Shop,
+    Like,
 )
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
@@ -56,3 +57,4 @@ admin.site.register(Catalog, CatalogAdmin)
 admin.site.unregister(User)
 admin.site.register(User, ProfileAdmin)
 admin.site.register(Shop,ShopAdmin)
+admin.site.register(Like)
