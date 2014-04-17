@@ -34,7 +34,13 @@ class ProductMixin(object):
 
 
 class ProductDetail(ProductMixin, DetailView):
-    pass
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetail, self).get_context_data(**kwargs)
+        return context
+
+
 
 
 class ProductList(ProductMixin, ListView):
