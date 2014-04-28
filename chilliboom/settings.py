@@ -84,7 +84,7 @@ WSGI_APPLICATION = '%s.wsgi.application' % PROJECT
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(default=env('DATABASE_URL', 'sqlite:////Users/useradmin/DJANGO/chilliboom/chilliboomdb.sqlite3')),
+    'default': dj_database_url.config(default=env('DATABASE_URL', 'sqlite:////Users/annalopatinski/DJANGO/chilliboom/chilliboomdb.sqlite3')),
     #'ATOMIC_REQUESTS': True
 }
 

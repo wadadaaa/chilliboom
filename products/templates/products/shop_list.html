@@ -13,10 +13,10 @@
       <img src="{{ shop.avatar|thumbnail_url:'small' }}" alt="{{ shop.title }}">{% endif %}
       <div class="caption">
         <h3>{{ shop.title }}</h3>
-        <p>Submitted by <a href="{{ product.shop.get_absolute_url }}">{{ product.shop }}</a></p>
         <div class="btn-group">
         <a href="{{ shop.get_absolute_url }}" class="btn btn-primary" role="button">{% bootstrap_icon "eye" %} View</a>
         <a href="#" class="btn btn-danger" role="button">{% bootstrap_icon "heart" %} Like</a></div>
+
       </div>
     </div>
   </div>

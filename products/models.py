@@ -9,9 +9,11 @@ User = get_user_model()
 class Catalog(models.Model):
     title = models.CharField(max_length=80)
     slug = models.SlugField(unique=True)
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
-    image = models.ImageField(verbose_name=u'Image', upload_to="category_pic", blank=True)
-    
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, related_name='children')
+    image = models.ImageField(
+        verbose_name=u'Image', upload_to="category_pic", blank=True)
+
     def __unicode__(self):
         return self.title
 
@@ -25,7 +27,8 @@ class Catalog(models.Model):
 class Shop(models.Model):
     title = models.CharField(max_length=30)
     website = models.URLField()
-    avatar = models.ImageField(verbose_name=u'Avatar', upload_to="avatar_pic", blank=True)
+    avatar = models.ImageField(
+        verbose_name=u'Avatar', upload_to="avatar_pic", blank=True)
     description = models.TextField(blank=True,
                                    help_text="Describe yourself.")
     submitter = models.ForeignKey(User)
@@ -48,15 +51,18 @@ class ProductManager(models.Manager):
     def get_featured(self):
         return self.filter(is_featured=True)
 
+
 class Product(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
-    image = models.ImageField(verbose_name=u'Image', upload_to="product_pic", blank=True)
+    image = models.ImageField(
+        verbose_name=u'Image', upload_to="product_pic", blank=True)
     catalog = models.ForeignKey(Catalog)
     description = models.TextField(blank=True, help_text="Describe product")
     submitter = models.ForeignKey(User)
     price = models.DecimalField(max_digits=15, decimal_places=2)
-    sale_price = models.DecimalField(max_digits=15, decimal_places=2)
+    sale_price = models.DecimalField(
+        max_digits=15, decimal_places=2, null=True)
     is_active = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
     quantity = models.IntegerField()
@@ -74,6 +80,7 @@ class Product(models.Model):
         permissions = (
             ('can_like', 'Can like product'),
         )
+
     @models.permalink
     def like_url(self):
         return '/shop/like/?product=%s' % self.pk
@@ -94,12 +101,14 @@ class Like(models.Model):
             ('user', 'product'),
         )
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True)
     bio = models.TextField(null=True)
 
     def __unicode__(self):
         return "%s's profile" % self.user
+
 
 def create_profile(sender, instance, created, **kwargs):
     if created:

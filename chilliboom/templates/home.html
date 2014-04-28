@@ -20,8 +20,8 @@
         <p>Submitted by <a href="{{ product.shop.get_absolute_url }}">{{ product.shop.title }}</a></p>
         <div class="btn-group">
         <a href="/shop/product/detail/{{ product.slug }}" class="btn btn-info" role="button">{% bootstrap_icon "eye-open" %} View</a>
-        <a href="#" class="btn btn-primary" role="button">{% bootstrap_icon "shopping-cart" %} Buy</a>
-        <a href="{{ product.like_url }}" class="btn btn-danger" role="button">{% bootstrap_icon "heart-empty" %} {{ products.like }}</a></div>
+        <a class="btn btn-success" href="{{ product.shop.website }}">{% bootstrap_icon "shopping-cart" %} Buy</a>
+        <a href="{{ product.like_url }}" class="btn btn-danger" role="button">{% bootstrap_icon "heart-empty" %} {{ products.like }}Like</a></div>
       </div>
     </div>
   </div>

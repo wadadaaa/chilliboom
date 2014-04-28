@@ -21,7 +21,7 @@
 
 		<div class="well">{{ product.description }}</div>
 	
-        
+
 	</div>
 
 </div>
@@ -34,7 +34,8 @@
 		<a class="btn btn-danger">{% bootstrap_icon "heart" %} Like</a>
         <a class="btn btn-primary">Price <span class="badge">{{ product.price }} ₪</span></a>
         <a class="btn btn-warning">Sale price <span class="badge">{{ product.sale_price }} ₪</span></a>
-        <a class="btn btn-success">{% bootstrap_icon "shopping-cart" %} Add to cart</a>
+        <a class="btn btn-success" href="{{ product.shop.website }}">{% bootstrap_icon "shopping-cart" %} Buy</a>
+
     </div>
 </div>
 </div>         

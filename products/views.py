@@ -26,8 +26,6 @@ from products.forms import (
 )
 
 
-#TODO: pagination for all lists
-
 
 class ProductMixin(object):
     model = Product
@@ -41,14 +39,13 @@ class ProductDetail(ProductMixin, DetailView):
         return context
 
 
-
-
 class ProductList(ProductMixin, ListView):
     paginate_by = 5
 
 DIRECTION_WEIGHT = {
     'up': 1,
 }
+
 
 class LikeProductMixin(SingleObjectMixin):
     model = Product
@@ -77,10 +74,10 @@ class LikeProductMixin(SingleObjectMixin):
 #         if not created:
 #             if like.weight == weight:
 #
-#                 # Liked the same
+# Liked the same
 #                 pass
 #             elif abs(like.weight) == abs(weight):
-#                 # Liked opposite
+# Liked opposite
 #                 like.delete()
 #             else:
 #                 like.weight = weight
@@ -101,16 +98,11 @@ class ProductLike(JSONResponseMixin, AjaxResponseMixin, View, PermissionRequired
     #     )
     #     like.save()
 
-
-
     def get_ajax(self, request, *args, **kwargs):
         json_dict = {
             'result': self.ok_or_bad
         }
         return self.render_json_response(json_dict)
-
-
-
 
 
 class ProductCreate(ProductMixin, SuccessMessageMixin, CreateView, LoginRequiredMixin):
@@ -120,6 +112,7 @@ class ProductCreate(ProductMixin, SuccessMessageMixin, CreateView, LoginRequired
     def form_valid(self, form):
         form.instance.submitter = self.request.user
         return super(ProductCreate, self).form_valid(form)
+
     def get_success_url(self):
         return reverse("profile", kwargs={'slug': self.request.user})
 
@@ -133,13 +126,12 @@ class CatalogList(CatalogMixin, ListView):
 
 
 class CatalogDetail(CatalogMixin, DetailView):
-    
+
     def get_context_data(self, **kwargs):
         context = super(CatalogDetail, self).get_context_data(**kwargs)
         context['products'] = Product.objects.filter(catalog=Catalog)
 
         return context
-
 
 
 class ShopMixin(object):
@@ -165,9 +157,10 @@ class ShopCreate(ShopMixin, SuccessMessageMixin, CreateView, LoginRequiredMixin)
     def form_valid(self, form):
         f = form.save(commit=False)
         f.submitter = self.request.user
-        
+
         f.save()
         return super(ShopCreate, self).form_valid(form)
+
     def get_success_url(self):
         return reverse("profile", kwargs={'slug': self.request.user})
 
