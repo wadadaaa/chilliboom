@@ -26,7 +26,6 @@ from products.forms import (
 )
 
 
-
 class ProductMixin(object):
     model = Product
 

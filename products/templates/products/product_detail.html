@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load thumbnail bootstrap3 %}
+{% load disqus_tags %}
+{% disqus_dev %}
 {% block title %} &bull; {{ product.title }} Details{% endblock %}
 
 
@@ -21,7 +23,7 @@
 
 		<div class="well">{{ product.description }}</div>
 	
-
+{% disqus_show_comments %}
 	</div>
 
 </div>

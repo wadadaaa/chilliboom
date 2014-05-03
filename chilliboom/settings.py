@@ -37,8 +37,10 @@ INSTALLED_APPS = (
     'haystack',
     'bootstrap3',
     'braces',
+    'disqus',
     
 )
+DISQUS_WEBSITE_SHORTNAME = 'chilliboom'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
