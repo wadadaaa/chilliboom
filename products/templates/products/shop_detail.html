@@ -15,8 +15,8 @@
     <a class="btn btn-default" href="{{ object.website }}">{% bootstrap_icon "globe" %} {{ object.website }}</a>
 
 <h3>Last arrivals from {{ shop.title }}</h3>
-{% for product.shop in products.shop %}
-<img src="{{ product.shop.image|thumbnail_url:'small' }}" alt="{{ product.shop.title }}"/></a>
+{% for product in object.product_set.all %}
+<img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product.title }}"/></a>
 {% endfor %}
 </div>
 </div>
