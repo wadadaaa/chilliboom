@@ -7,4 +7,9 @@ def featured_liked(request):
 	}
 	return featured_liked
 
-	
+def search_form(request):
+    from haystack.forms import ModelSearchForm
+    haystack_form = {
+        'haystack_form': ModelSearchForm
+    }
+    return haystack_form

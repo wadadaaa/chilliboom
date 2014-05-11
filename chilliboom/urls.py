@@ -9,17 +9,15 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-                       url(r'^assets/(?P<path>.*)$', 'django.views.static.serve',
-                           {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
-                       url(r'^uploads/(?P<path>.*)$', 'django.views.static.serve',
-                           {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+
                        url(r'^administration/', include(admin.site.urls)),
 
                        url(r'^$', TemplateView.as_view(
                            template_name='home.html'), name='home'),
                        url(r'^login/$', 'django.contrib.auth.views.login',
                            {'template_name': 'registration/login.html'}, name="shop_login"),
-                       url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', name="shop_logout"),
+                       url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',
+                           name="shop_logout"),
                        url(r'^accounts/', include(
                            'registration.backends.default.urls')),
                        url(r'^users/(?P<slug>\w+)/$',
@@ -33,8 +31,8 @@ urlpatterns = patterns('',
                        )
 
 if settings.DEBUG:
-    import debug_toolbar
+    #import debug_toolbar
+    from django.conf.urls.static import static
     urlpatterns += patterns('',
-                            url(r'^__debug__/', include(debug_toolbar.urls)),
-
-                            )
+        #url(r'^__debug__/', include(debug_toolbar.urls)),
+    ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, Http404
 from braces.views import JSONResponseMixin, LoginRequiredMixin, PermissionRequiredMixin, AjaxResponseMixin
-
+from haystack.query import SearchQuerySet
 
 User = get_user_model()
 
@@ -184,3 +184,9 @@ class ProfileUpdate(SuccessMessageMixin, UpdateView, LoginRequiredMixin):
 
     def get_success_url(self):
         return reverse("profile", kwargs={'slug': self.request.user})
+
+
+def search_titles(request):
+    products = SearchQuerySet().autocomplete(
+        content_auto=request.POST.get('search_text', ''))
+    return render_to_response('ajax_search.html', {'products': products})

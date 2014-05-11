@@ -13,9 +13,7 @@ RAVEN_CONFIG = {
 SECRET_KEY = env('SECRET_KEY', '#b7&!k2cxgw5+s$%s&p#+!_8=*lo9mv-3*p0gsozvs3%myb(=k')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-TEMPLATE_DEBUG = True
+DEBUG = TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -38,7 +36,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'braces',
     'disqus',
-    
+
 )
 DISQUS_WEBSITE_SHORTNAME = 'chilliboom'
 
@@ -63,6 +61,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "products.context_processors.featured_liked",
+    "products.context_processors.search_form",
 )
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
@@ -110,7 +109,7 @@ from django.core.urlresolvers import reverse_lazy
 LOGIN_URL=reverse_lazy('shop_login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_URL=reverse_lazy('shop_logout')
-MAX_USER_SHOPS = 10
+MAX_USER_SHOPS = 1
 
 #haystack search
 import os
@@ -139,7 +138,7 @@ THUMBNAIL_ALIASES = {
 
 MEDIA_ROOT = cd('public/uploads')
 MEDIA_URL = '/uploads/'
-STATIC_ROOT = cd('public', 'assets')
+STATIC_ROOT = cd('public/assets')
 STATIC_URL = '/assets/'
 
 STATICFILES_FINDERS = (
@@ -153,18 +152,18 @@ TEMPLATE_DIRS = (
     cd('templates'),
 )
 
-if DEBUG:
-    INSTALLED_APPS += (
-        'debug_toolbar',
-    )
-    DEBUG_TOOLBAR_PATCH_SETTINGS = False
-    MIDDLEWARE_CLASSES += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    )
-    INTERNAL_IPS = (
-        '127.0.0.1',
-    )
-    DEBUG_TOOLBAR_CONFIG = {
-        'INTERCEPT_REDIRECTS': False,
-        'RENDER_PANELS': True,
-    }
+# if DEBUG:
+#     INSTALLED_APPS += (
+#         'debug_toolbar',
+#     )
+#     DEBUG_TOOLBAR_PATCH_SETTINGS = False
+#     MIDDLEWARE_CLASSES += (
+#         'debug_toolbar.middleware.DebugToolbarMiddleware',
+#     )
+#     INTERNAL_IPS = (
+#         '127.0.0.1',
+#     )
+#     DEBUG_TOOLBAR_CONFIG = {
+#         'INTERCEPT_REDIRECTS': False,
+#         'RENDER_PANELS': True,
+#     }

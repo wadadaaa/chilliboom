@@ -11,8 +11,9 @@
         {% if object.avatar %}
         <img class="img-thumbnail" src="{{ object.avatar.url }}" alt="{{ object.title }}">
         {% endif %}
-        <p>{{ object.description }}</p>
-    <a class="btn btn-default" href="{{ object.website }}">{% bootstrap_icon "globe" %} {{ object.website }}</a>
+<a class="btn btn-default" href="{{ object.website }}">{% bootstrap_icon "globe" %} {{ object.website }}</a>
+      <div class="well">{{ object.description }}</div>
+    
 
 <h3>Last arrivals from {{ shop.title }}</h3>
 {% for product in object.product_set.all %}

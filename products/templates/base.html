@@ -5,7 +5,7 @@
     <title>ChilliBoom{% block title %}{% endblock %}</title>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <!--<link rel="stylesheet" href="{{ STATIC_URL }}styles/main.css" type="text/css"/>-->
-      <!--[if IE]><link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles/ie.css" /><![endif]-->
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles/ie.css" /><![endif]-->
       {% bootstrap_css %}
     </head>
 
@@ -16,7 +16,7 @@
 <ul class="nav nav-pills">
 
  
-
+            
             <li><a href="{% url 'product_list' %}">Products</a></li>
             <li><a href="{% url 'shop_list' %}">All shops</a></li>
             <li><a href="{% url 'catalog_list' %}">All catalogs</a></li>
@@ -33,9 +33,22 @@
 
 
                                {% endif %}
-{% if user.is_authenticated %}
+                {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
                 {% endif %}
+
+
+                <form class="navbar-form navbar-left" role="search" method="get" action="{% url "haystack_search" %}">
+    <div class="input-group">
+      <input class="form-control" id="id_q" name="q" placeholder="Search" type="text">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default">Search</button>
+      </span>
+    </div>
+
+
+
+                </form>
     </ul> 
 
 {% if messages %}
