@@ -1,18 +1,16 @@
-{% extends "base.html" %}
+{% extends "base_bootstrap.html" %}
 {% load thumbnail %}
+
 {% block content %}
 
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Catalogs list</h3>
-    </div><div class="panel-body">
-    {% for object in object_list %}
+           <ul class="nav nav-list">
+			<li class="nav-header">Catalogs</li>
+             {% for object in object_list %}
+			 <li class="active"><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+             {% endfor %}
+           </ul>
 
-            <p><a href="{{ object.get_absolute_url }}">{{ object }}</a></p>
-    {% endfor %}
-        </div>
-    </div>
 
 
 

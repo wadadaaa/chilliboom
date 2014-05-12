@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_bootstrap.html" %}
 {% load thumbnail bootstrap3 %}
 {% block title %} &bull; Product List{% endblock %}
 
@@ -6,25 +6,45 @@
 
 
 {% block content %}
+<section class="header_text sub">
+			<img class="pageBanner" src="{{ STATIC_URL }}themes/images/pageBanner.png" alt="New products" >
+				<h4><span>All PRODUCTS</span></h4>
+			</section>
+        <div class="row">
 
+					<div class="col-md-9">
+						<ul class="thumbnails listing-products">
+                          {% for object in object_list %}
 
+							<li class="col-md-3">
 
-<div class="panel panel-default">
-<div class="panel-body">
-{% for object in object_list %}
-  <div class="col-sm-6 col-md-4 col-lg-3">
+								<div class="product-box">
 
-      <img class="img-thumbnail" src="{{ object.image|thumbnail_url:'large' }}" alt="{{ object.title }}">
-      <div class="caption">
-        <h3><a href="/shop/product/detail/{{ object.slug }}">{{ object.title }}</a></h3>
-        <p> {{ object.title }} by  <a href="{{ object.shop.get_absolute_url }}">{{ object.shop }}</a></p>
-        <div class="btn-group">
-        <a href="/shop/product/detail/{{ object.slug }}" class="btn btn-info" role="button">{% bootstrap_icon "eye-open" %} View</a>
-        <a href="{{ product.like_url }}" class="btn btn-danger" role="button">{% bootstrap_icon "heart-empty" %} {{ products.like }}Like</a></div>
-      </div>
+									<span class="sale_tag"></span>
+									<img src="{{ object.image|thumbnail_url:'large' }}" alt="{{ object.title }}"><br/>
+									<a href="/shop/product/detail/{{ object.slug }}" class="title">{{ object.title }}</a><br/>
+                                    <p class="price">SALE $ {{ object.sale_price }}</p>
+                                    By <a href="{{ object.shop.get_absolute_url }}" class="category">{{ object.shop }}</a>
+								</div>
 
-  </div>
-  {% endfor %}
-</div></div>
+							</li>
+                           {% endfor %}
+                            </ul>
+
+						<hr>
+
+					</div>
+            <div class="col-md-3 col">
+				 <div class="block">
+						<ul class="nav nav-list">
+							<li class="nav-header">Catalogs</li>
+                                {% for catalog in catalogs %}
+							   <li class="active"><a href="{{ catalog.get_absolute_url }}">{{ catalog }}</a></li>
+                                {% endfor %}
+						</ul>
+					<br/>
+				</div>
+            </div>
+        </div>
 
 {% endblock %}

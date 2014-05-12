@@ -1,32 +1,57 @@
-{{% extends "base.html"%}
+{% extends "base_bootstrap.html"%}
 
 {% load thumbnail bootstrap3 %}
 
 {% block title %} &bull; Home{% endblock %}
+
+
 {% block content %}
 
+        <section  class="homepage-slider" id="home-slider">
+              <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                  <!-- Indicators -->
+                  <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                  </ol>
 
-{% if featured_products %}
-<div class="panel panel-default">
-<div class="panel-heading">
-  <h3 class="panel-title">Features products</h3>
-</div><div class="panel-body">
-{% for product in featured_products %}
-  <div class="col-sm-6 col-md-4 col-lg-3">
-    <div class="thumbnail">
-      <img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product.title }}">
-      <div class="caption">
-        <h3><a href="/shop/product/detail/{{ product.slug }}">{{ product.title }}</a></h3>
-        <p>Submitted by <a href="{{ product.shop.get_absolute_url }}">{{ product.shop.title }}</a></p>
-        <div class="btn-group">
-        <a href="/shop/product/detail/{{ product.slug }}" class="btn btn-info" role="button">{% bootstrap_icon "eye-open" %} View</a>
-        <a class="btn btn-success" href="{{ product.shop.website }}">{% bootstrap_icon "shopping-cart" %} Buy</a>
-        <a href="{{ product.like_url }}" class="btn btn-danger" role="button">{% bootstrap_icon "heart-empty" %} {{ products.like }}Like</a></div>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
-</div></div>
+                  <!-- Wrapper for slides -->
+
+                    <div class="item active">
+                      <img src="{{ STATIC_URL }}themes/images/carousel/banner-1.jpg" alt="">
+                    </div>
+              </div>
+        </section>
+
+        	<section class="header_text">
+				We stand for top quality templates. Our genuine developers always optimized bootstrap commercial templates.
+				<br/>Don't miss to use our cheap abd best bootstrap templates.
+			</section>
+
+    {% if featured_products %}
+        <h4 class="title">
+		<span class="pull-left"><span class="text"><span class="line">Feature <strong>Products</strong></span></span></span>
+		<span class="pull-right">
+		<a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a>
+		</span>
+		</h4>
+
+    {% for product in featured_products %}
+        <li class="col-md-3">
+        <div class="product-box">
+        <span class="sale_tag"></span>
+        <p><img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product.title }}"></p>
+        <a href="/shop/product/detail/{{ product.slug }}" class="title">{{ product.title }}</a><br/>
+        <a href="{{ product.shop.get_absolute_url }}" class="category">{{ product.shop.title }}</a>
+        <p class="price">{{ product.price }} $</p>
+        <p class="price">Sale {{ product.sale_price }} $</p>
+        </div>
+        </li>
+
+
+{% endfor %}
+
 {% endif %}
 
 {% endblock %}
