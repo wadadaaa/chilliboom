@@ -3,24 +3,40 @@
 {% block title %} &bull; {{ object.title }} Shop{% endblock %}
 
 {% block content %}
-<div class="panel panel-title">
-<div class="panel-heading">
-  <h3 class="panel-title">{{ object.title }}</h3>
-</div>
-<div class="panel-body">
-        {% if object.avatar %}
-        <img class="img-thumbnail" src="{{ object.avatar.url }}" alt="{{ object.title }}">
-        {% endif %}
-<a class="btn btn-default" href="{{ object.website }}">{% bootstrap_icon "globe" %} {{ object.website }}</a>
-      <div class="well">{{ object.description }}</div>
+
+
+<section class="header_text sub" xmlns="http://www.w3.org/1999/html">
+			<img class="pageBanner" src="{{ STATIC_URL }}themes/images/pageBanner.png" alt="New products" >
+				<h4><span>Shop Detail</span></h4>
+			</section>
+        <section class="main-content">
+				<div class="row">
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-4">
+                                <img class="img-thumbnail" src="{{ object.avatar.url }}" alt="{{ object.title }}">
+							</div>
+
+                            <div class="col-md-5">
+								<address>
+                                    <strong>Brand:</strong> <span><h3>{{ object.title }}</h3></span><br>
+                                    <strong>Description:</strong> <span>{{ object.description }}</span><br>
+								</address>
+                                <a class="btn btn-success" href="{{ object.website }}">{% bootstrap_icon "shopping-cart" %} Visit</a>
+							</div>
+                        </div>
+                    <h3>Last arrivals from {{ shop.title }}</h3>
+                {% for product in object.product_set.all %}
+                <a href="/shop/product/detail/{{ product.slug }}"><img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product.title }}"/></a>
+                {% endfor %}
+                </div>
+             </div>
+        </section>
+
     
 
-<h3>Last arrivals from {{ shop.title }}</h3>
-{% for product in object.product_set.all %}
-<img src="{{ product.image|thumbnail_url:'small' }}" alt="{{ product.title }}"/></a>
-{% endfor %}
-</div>
-</div>
+
+
         
         
 

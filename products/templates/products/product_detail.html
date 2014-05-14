@@ -24,8 +24,9 @@
 							<div class="col-md-5">
 								<address>
                                     <strong>Product:</strong> <span>{{ product.title }}</span><br>
-									<strong>Brand:</strong> <span>{{ product.shop }}</span><br>
+									<strong>Brand:</strong> <span><a href="{{ product.shop.get_absolute_url }}" class="title">{{ product.shop }}</a></span><br>
 									<strong>Quantity in stock:</strong> <span>{{ product.quantity }}</span><br>
+                                    <strong>Product description:</strong> <span>{{ product.description }}</span><br>
 								</address>
 								<h4><strong>Price: $ {{ product.price }} </strong></h4>
                                 <h4><strong>SALE: $ {{ product.sale_price }} </strong></h4>
@@ -33,6 +34,7 @@
 							</div>
                             </div>
                         </div>
+
                     <div class="col-md-3 col">
                          <div class="block">
                                 <ul class="nav nav-list">
@@ -44,19 +46,7 @@
                             <br/>
                         </div>
                      </div>
-                    </div>
-
-            <div class="row">
-							<div class="col-md-9">
-								<ul class="nav nav-tabs" id="myTab">
-									<li class="active"><a href="#home">Description</a></li>
-								</ul>
-								<div class="tab-content">
-									<div class="tab-pane active" id="home">{{ product.description }}</div>
-
-								</div>
-							</div>
-
+                </div>
                 <div class="col-md-9">
 								<br>
 								<h4 class="title">
@@ -72,7 +62,6 @@
                     </div>
 
 
-</div>
             </section>
 
 
