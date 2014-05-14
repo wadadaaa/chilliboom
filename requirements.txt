@@ -12,3 +12,5 @@ easy_thumbnails
 Whoosh==2.6.0
 django-haystack==2.1.0
 django-braces
+django-disqus
+django-bootstrap3
