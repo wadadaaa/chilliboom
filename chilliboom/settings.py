@@ -13,7 +13,7 @@ RAVEN_CONFIG = {
 SECRET_KEY = env('SECRET_KEY', '#b7&!k2cxgw5+s$%s&p#+!_8=*lo9mv-3*p0gsozvs3%myb(=k')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = TEMPLATE_DEBUG = True
+DEBUG = TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -85,7 +85,7 @@ WSGI_APPLICATION = '%s.wsgi.application' % PROJECT
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(default=env('DATABASE_URL', 'sqlite:////Users/annalopatinski/DJANGO/chilliboom/chilliboomdb.sqlite3')),
+    'default': dj_database_url.config(default=env('DATABASE_URL', 'postgres://chilliboom:qwepoi@localhost:5432/chilliboomdb')),
     #'ATOMIC_REQUESTS': True
 }
 
