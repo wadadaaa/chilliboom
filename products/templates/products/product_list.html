@@ -16,18 +16,18 @@
 						<ul class="thumbnails listing-products">
                           {% for object in object_list %}
 
-							<li class="col-md-3">
+							<div class="col-md-3">
 
 								<div class="product-box">
 
 									<span class="sale_tag"></span>
-									<img src="{{ object.image|thumbnail_url:'large' }}" alt="{{ object.title }}"><br/>
+									<img src="{{ object.image|thumbnail_url:'small' }}" alt="{{ object.title }}"><br/>
 									<a href="/shop/product/detail/{{ object.slug }}" class="title">{{ object.title }}</a><br/>
                                     <p class="price">SALE $ {{ object.sale_price }}</p>
                                     By <a href="{{ object.shop.get_absolute_url }}" class="category">{{ object.shop }}</a>
 								</div>
 
-							</li>
+							</div>
                            {% endfor %}
                             </ul>
 

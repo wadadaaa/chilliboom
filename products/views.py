@@ -39,7 +39,7 @@ class ProductDetail(ProductMixin, DetailView):
 
 
 class ProductList(ProductMixin, ListView):
-    paginate_by = 5
+    pass
 
 DIRECTION_WEIGHT = {
     'up': 1,

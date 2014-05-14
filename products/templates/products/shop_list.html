@@ -14,17 +14,17 @@
 					<div class="col-md-9">
 						<ul class="thumbnails listing-products">
                             {% for object in object_list %}
-							<li class="col-md-3">
+							<div class="col-md-3">
 								<div class="product-box">
 									<span class="sale_tag"></span>{% if object.avatar %}
 									<img src="{{ object.avatar|thumbnail_url:'small' }}" alt="{{ object.title }}"><br/>{% endif %}
 									<a href="{{ object.get_absolute_url }}" class="title">{{ object.title }}</a><br/>
 								</div>
-							</li>
+							</div>
                              {% endfor %}
                          </ul>
 
-						<hr>
+
 					</div>
             </div>
 

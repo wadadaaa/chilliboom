@@ -123,6 +123,7 @@ HAYSTACK_CONNECTIONS = {
 THUMBNAIL_ALIASES = {
     '': {
         'small': {'size' : (150, 150), 'crop': 'smart'},
+        'middle': {'size' : (300, 300), 'crop': 'smart'},
         'large': {'size' : (500, 500), 'crop': 'smart'},
 
 
