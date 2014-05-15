@@ -13,7 +13,7 @@ RAVEN_CONFIG = {
 SECRET_KEY = env('SECRET_KEY', '#b7&!k2cxgw5+s$%s&p#+!_8=*lo9mv-3*p0gsozvs3%myb(=k')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = TEMPLATE_DEBUG = False
+DEBUG = TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -152,6 +152,10 @@ STATICFILES_FINDERS = (
 TEMPLATE_DIRS = (
     cd('templates'),
 )
+
+SOUTH_MIGRATION_MODULES = {
+        'easy_thumbnails': 'easy_thumbnails.south_migrations',
+    }
 
 # if DEBUG:
 #     INSTALLED_APPS += (
