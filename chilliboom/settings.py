@@ -86,7 +86,7 @@ WSGI_APPLICATION = '%s.wsgi.application' % PROJECT
 import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(default=env('DATABASE_URL', 'sqlite:////home/chilliboom/chilliboom/chilliboomdb.sqlite3')),
-    #'ATOMIC_REQUESTS': True
+    'ATOMIC_REQUESTS': True
 }
 
 # Internationalization
