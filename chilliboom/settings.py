@@ -49,7 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'raven.contrib.django.middleware.Sentry404CatchMiddleware',
     'raven.contrib.django.middleware.SentryResponseErrorIdMiddleware',
-    #'django.middleware.transaction.TransactionMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
