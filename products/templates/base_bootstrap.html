@@ -1,4 +1,6 @@
 {% load static thumbnail bootstrap3 %}
+{% load account %}
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -42,19 +44,14 @@
             <li><a href="{% url 'shop_list' %}">All shops</a></li>
             <li><a href="{% url 'catalog_list' %}">All catalogs</a></li>
 
-                               {% if user.is_authenticated %}
-
-            <li><a href="{% url 'shop_logout' %}">Logout</a></li>
-
-
-                               {% else %}
-
-            <li><a href="{% url 'registration_register' %}">Register</a></li>
-            <li><a href="{% url 'shop_login' %}">Login</a></li>
-
-
-                               {% endif %}
-                {% if user.is_authenticated %}
+                
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+	            {% else %}
+	            <li><a href="{% url 'account_signup' %}">Register</a></li>
+                <li><a href="{% url 'account_login' %}">Login</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
                 <li><a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
                 {% endif %}
 
@@ -153,11 +150,13 @@
 				});
 			});
 		</script>
+
 		<!-- scripts -->
 		<script src="{{ STATIC_URL }}themes/js/jquery-1.7.2.min.js"></script>
 		<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
 		<script src="{{ STATIC_URL }}themes/js/superfish.js"></script>
 		<script src="{{ STATIC_URL }}themes/js/jquery.scrolltotop.js"></script>
+
 		<!--[if lt IE 9]>			
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 			<script src="{{ STATIC_URL }}js/respond.min.js"></script>

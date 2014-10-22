@@ -14,12 +14,13 @@ urlpatterns = patterns('',
 
                        url(r'^$', TemplateView.as_view(
                            template_name='home.html'), name='home'),
-                       url(r'^login/$', 'django.contrib.auth.views.login',
-                           {'template_name': 'registration/login.html'}, name="shop_login"),
-                       url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',
-                           name="shop_logout"),
-                       url(r'^accounts/', include(
-                           'registration.backends.default.urls')),
+                       # url(r'^login/$', 'django.contrib.auth.views.login',
+                       #     {'template_name': 'registration/login.html'}, name="shop_login"),
+                       # url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',
+                       #     name="shop_logout"),
+                       # url(r'^accounts/', include(
+                       #     'registration.backends.default.urls')),
+                       url(r'^account/', include('allauth.urls')),
                        url(r'^users/(?P<slug>\w+)/$',
                            ProfileDetail.as_view(), name="profile"),
                        url(r'^profile/edit/$',

@@ -7,7 +7,6 @@ cd = lambda *a: os.path.join(ROOT, *a)
 PROJECT = os.path.basename(ROOT)
 
 
-
 RAVEN_CONFIG = {
     'dsn': env('SENTRY_DSN'),
 }
@@ -32,14 +31,32 @@ INSTALLED_APPS = (
     'raven.contrib.django.raven_compat',
     'products',
     'south',
-    'registration',
+    # 'registration',
     'easy_thumbnails',
     'haystack',
     'bootstrap3',
     'braces',
     'disqus',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'djrill',
+
 
 )
+
+MANDRILL_API_KEY = 'oylgaDZItKyYsriUBi0vGw'
+EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+SERVER_EMAIL = 'info@chilliboom.dev'
+DEFAULT_FROM_EMAIL = SERVER_EMAIL
+
+
+SITE_ID = 1
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 DISQUS_WEBSITE_SHORTNAME = 'chilliboom'
 
 MIDDLEWARE_CLASSES = (
@@ -64,7 +81,22 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     "products.context_processors.featured_liked",
     "products.context_processors.search_form",
+    # Required by allauth template tags
+    "django.core.context_processors.request",
+    # allauth specific context processors
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
 )
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 

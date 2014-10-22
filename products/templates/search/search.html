@@ -1,5 +1,5 @@
 {% extends 'base_bootstrap.html' %}
-
+{% load thumbnail bootstrap3 %}
 {% block content %}
 
 
@@ -9,7 +9,11 @@
             <h3>All Results</h3>
             {% for result in page.object_list %}
                 <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
+                    <img src="{{ result.object.image|thumbnail_url:'small' }}"></a>
+                    <a href="/shop/product/detail/{{ result.object.slug }}">{{ result.object.title }}</a>
+
+                     
+
                 </p>
             {% empty %}
                 <p>No results found.</p>
