@@ -1,12 +1,4 @@
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as anonymous module.
-        define(['jquery', 'jquery.cookie'], factory);
-    } else {
-        // Browser globals.
-        window.djdt = factory(jQuery);
-    }
-}(function ($) {
+(function ($) {
     var djdt = {
         handleDragged: false,
         events: {
@@ -39,6 +31,7 @@
                             url: render_panel_url
                         };
                         $.ajax(ajax_data).done(function(data){
+                            inner.prev().remove();  // Remove AJAX loader
                             inner.html(data);
                         }).fail(function(xhr){
                             var message = '<div class="djDebugPanelTitle"><a class="djDebugClose djDebugBack" href="">Back</a><h3>'+xhr.status+': '+xhr.statusText+'</h3></div>';
@@ -57,9 +50,9 @@
                 return false;
             });
             $(document).on('click', '#djDebug .djDebugPanelButton input[type=checkbox]', function() {
-                $.cookie($(this).attr('data-cookie'), $(this).prop('checked') ? 'on' : 'off', {
+                djdt.cookie.set($(this).attr('data-cookie'), $(this).prop('checked') ? 'on' : 'off', {
                     path: '/',
-                    expires: 10,
+                    expires: 10
                 });
             });
 
@@ -139,28 +132,34 @@
             });
             var handle = $('#djDebugToolbarHandle');
             $('#djShowToolBarButton').on('mousedown', function (event) {
-                var baseY = handle.offset().top - event.pageY;
-                $(document).on('mousemove', function (event) {
-                    var offset = handle.offset();
-                    offset.top = baseY + event.pageY;
-                    handle.offset(offset);
-                    djdt.handleDragged = true;
+                var startPageY = event.pageY;
+                var baseY = handle.offset().top - startPageY;
+                $(document).on('mousemove.djDebug', function (event) {
+                    // Chrome can send spurious mousemove events, so don't do anything unless the
+                    // cursor really moved.  Otherwise, it will be impossible to expand the toolbar
+                    // due to djdt.handleDragged being set to true.
+                    if (djdt.handleDragged || event.pageY != startPageY) {
+                        var offset = handle.offset();
+                        offset.top = baseY + event.pageY;
+                        handle.offset(offset);
+                        djdt.handleDragged = true;
+                    }
                 });
                 return false;
             });
             $(document).on('mouseup', function () {
-                $(document).off('mousemove');
+                $(document).off('mousemove.djDebug');
                 if (djdt.handleDragged) {
                     var top = handle.offset().top;
-                    $.cookie('djdttop', top, {
+                    djdt.cookie.set('djdttop', top, {
                         path: '/',
                         expires: 10
                     });
                     setTimeout(function () {
                         djdt.handleDragged = false;
                     }, 10);
+                    return false;
                 }
-                return false;
             });
             $(document).bind('close.djDebug', function() {
                 // If a sub-panel is open, close that
@@ -180,7 +179,7 @@
                     return;
                 }
             });
-            if ($.cookie('djdt') == 'hide') {
+            if (djdt.cookie.get('djdt') == 'hide') {
                 djdt.hide_toolbar(false);
             } else {
                 djdt.show_toolbar(false);
@@ -209,14 +208,14 @@
             $('#djDebugToolbar').hide('fast');
             $('#djDebugToolbarHandle').show();
             // set handle position
-            var handleTop = $.cookie('djdttop');
+            var handleTop = djdt.cookie.get('djdttop');
             if (handleTop) {
                 $('#djDebugToolbarHandle').css({top: handleTop + 'px'});
             }
             // Unbind keydown
             $(document).unbind('keydown.djDebug');
             if (setCookie) {
-                $.cookie('djdt', 'hide', {
+                djdt.cookie.set('djdt', 'hide', {
                     path: '/',
                     expires: 10
                 });
@@ -235,7 +234,7 @@
             } else {
                 $('#djDebugToolbar').show();
             }
-            $.cookie('djdt', 'show', {
+            djdt.cookie.set('djdt', 'show', {
                 path: '/',
                 expires: 10
             });
@@ -246,8 +245,40 @@
             } else {
                 djdt.events.ready.push(callback);
             }
+        },
+        cookie: {
+            get: function(key){
+                if (document.cookie.indexOf(key) === -1) return null;
+
+                var cookieArray = document.cookie.split('; '),
+                    cookies = {};
+
+                cookieArray.forEach(function(e){
+                    var parts = e.split('=');
+                    cookies[ parts[0] ] = parts[1];
+                });
+
+                return cookies[ key ];
+            },
+            set: function(key, value, options){
+                options = options || {};
+
+                if (typeof options.expires === 'number') {
+                    var days = options.expires, t = options.expires = new Date();
+                    t.setDate(t.getDate() + days);
+                }
+
+                document.cookie = [
+                    encodeURIComponent(key) + '=' + String(value),
+                    options.expires ? '; expires=' + options.expires.toUTCString() : '',
+                    options.path    ? '; path=' + options.path : '',
+                    options.domain  ? '; domain=' + options.domain : '',
+                    options.secure  ? '; secure' : ''
+                ].join('');
+
+                return value;
+            }
         }
     };
     $(document).ready(djdt.init);
-    return djdt;
-}));
+})(djdt.jQuery);

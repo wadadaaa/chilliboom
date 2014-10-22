@@ -6,17 +6,19 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 cd = lambda *a: os.path.join(ROOT, *a)
 PROJECT = os.path.basename(ROOT)
 
+
+
 RAVEN_CONFIG = {
     'dsn': env('SENTRY_DSN'),
 }
 
-SECRET_KEY = env('SECRET_KEY', '#b7&!k2cxgw5+s$%s&p#+!_8=*lo9mv-3*p0gsozvs3%myb(=k')
+SECRET_KEY = env(
+    'SECRET_KEY', '#b7&!k2cxgw5+s$%s&p#+!_8=*lo9mv-3*p0gsozvs3%myb(=k')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -84,9 +86,16 @@ WSGI_APPLICATION = '%s.wsgi.application' % PROJECT
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(default=env('DATABASE_URL', 'sqlite:////home/chilliboom/chilliboom/chilliboomdb.sqlite3')),
+#     'ATOMIC_REQUESTS': True
+# }
 DATABASES = {
-    'default': dj_database_url.config(default=env('DATABASE_URL', 'sqlite:////home/chilliboom/chilliboom/chilliboomdb.sqlite3')),
-    'ATOMIC_REQUESTS': True
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'chilliboomdb.sqlite3',
+        'ATOMIC_REQUESTS': True
+    }
 }
 
 # Internationalization
@@ -106,12 +115,12 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 # for django-registration
 from django.core.urlresolvers import reverse_lazy
 
-LOGIN_URL=reverse_lazy('shop_login')
+LOGIN_URL = reverse_lazy('shop_login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
-LOGOUT_URL=reverse_lazy('shop_logout')
+LOGOUT_URL = reverse_lazy('shop_logout')
 MAX_USER_SHOPS = 1
 
-#haystack search
+# haystack search
 import os
 HAYSTACK_CONNECTIONS = {
     'default': {
@@ -122,12 +131,12 @@ HAYSTACK_CONNECTIONS = {
 
 THUMBNAIL_ALIASES = {
     '': {
-        'small': {'size' : (150, 150), 'crop': 'smart'},
-        'middle': {'size' : (300, 300), 'crop': 'smart'},
-        'large': {'size' : (500, 500), 'crop': 'smart'},
+        'small': {'size': (150, 150), 'crop': 'smart'},
+        'middle': {'size': (300, 300), 'crop': 'smart'},
+        'large': {'size': (500, 500), 'crop': 'smart'},
 
 
-        }
+    }
 }
 
 # Static files (CSS, JavaScript, Images)
@@ -137,10 +146,12 @@ THUMBNAIL_ALIASES = {
 #STATIC_ROOT = cd('static')
 #STATIC_URL = '/static/'
 
+
 MEDIA_ROOT = cd('public/uploads')
 MEDIA_URL = '/uploads/'
 STATIC_ROOT = cd('public/assets')
 STATIC_URL = '/assets/'
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -154,21 +165,21 @@ TEMPLATE_DIRS = (
 )
 
 SOUTH_MIGRATION_MODULES = {
-        'easy_thumbnails': 'easy_thumbnails.south_migrations',
-    }
+    'easy_thumbnails': 'easy_thumbnails.south_migrations',
+}
 
-# if DEBUG:
-#     INSTALLED_APPS += (
-#         'debug_toolbar',
-#     )
-#     DEBUG_TOOLBAR_PATCH_SETTINGS = False
-#     MIDDLEWARE_CLASSES += (
-#         'debug_toolbar.middleware.DebugToolbarMiddleware',
-#     )
-#     INTERNAL_IPS = (
-#         '127.0.0.1',
-#     )
-#     DEBUG_TOOLBAR_CONFIG = {
-#         'INTERCEPT_REDIRECTS': False,
-#         'RENDER_PANELS': True,
-#     }
+if DEBUG:
+    INSTALLED_APPS += (
+        'debug_toolbar',
+    )
+    DEBUG_TOOLBAR_PATCH_SETTINGS = False
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+    INTERNAL_IPS = (
+        '127.0.0.1',
+    )
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': False,
+        'RENDER_PANELS': True,
+    }
